@@ -1,0 +1,523 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>UTM URL Builder - Kinsta</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+      background: #F4ECE8;
+      margin: 0;
+      padding: 32px 16px 64px;
+      color: #301B1B;
+      min-height: 100vh;
+    }
+
+    .page-wrapper {
+      max-width: 780px;
+      margin: 0 auto;
+    }
+
+    /* Header */
+    .page-header {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 32px;
+    }
+
+    .logo {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .logo svg {
+      width: 36px;
+      height: 36px;
+      color: #FF0000;
+      flex-shrink: 0;
+    }
+
+    .logo-text {
+      font-size: 18px;
+      font-weight: 700;
+      color: #301B1B;
+      letter-spacing: -0.02em;
+    }
+
+    h1 {
+      font-size: 28px;
+      font-weight: 700;
+      margin: 0 0 6px;
+      letter-spacing: -0.03em;
+      color: #301B1B;
+    }
+
+    .subtitle {
+      font-size: 15px;
+      color: #6B4A4A;
+      margin: 0 0 28px;
+    }
+
+    /* Info banner */
+    .info-banner {
+      background: #fff;
+      border-left: 4px solid #FF3F00;
+      border-radius: 0 8px 8px 0;
+      padding: 14px 18px;
+      font-size: 13.5px;
+      color: #301B1B;
+      margin-bottom: 28px;
+      line-height: 1.5;
+    }
+
+    /* Card */
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      padding: 32px;
+      box-shadow: 0 1px 4px rgba(48,27,27,0.08), 0 4px 16px rgba(48,27,27,0.06);
+    }
+
+    /* Field styles */
+    .field {
+      margin-bottom: 22px;
+    }
+
+    .field label {
+      display: block;
+      font-weight: 600;
+      font-size: 13.5px;
+      margin-bottom: 3px;
+      color: #301B1B;
+    }
+
+    .field-hint {
+      font-size: 12.5px;
+      color: #8A6060;
+      margin-bottom: 7px;
+      display: block;
+      line-height: 1.4;
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 9px 12px;
+      border: 1.5px solid #DDD3D0;
+      border-radius: 7px;
+      font-size: 14px;
+      color: #301B1B;
+      background: #FDFCFB;
+      transition: border-color 0.15s, box-shadow 0.15s;
+      appearance: none;
+      -webkit-appearance: none;
+    }
+
+    .field select {
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='16' height='16' viewBox='0 0 24 24' fill='none' stroke='%23301B1B' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: right 10px center;
+      padding-right: 36px;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      border-color: #FF3F00;
+      box-shadow: 0 0 0 3px rgba(255,63,0,0.12);
+      outline: none;
+    }
+
+    .field input.has-error,
+    .field select.has-error {
+      border-color: #CC3300;
+    }
+
+    .error-msg {
+      font-size: 12px;
+      color: #CC3300;
+      margin-top: 4px;
+      display: none;
+    }
+
+    .error-msg.visible { display: block; }
+
+    .required { color: #FF3F00; margin-left: 2px; }
+
+    /* Grid */
+    .field-row {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 0 24px;
+    }
+
+    @media (max-width: 580px) {
+      .field-row { grid-template-columns: 1fr; }
+    }
+
+    /* Divider */
+    .divider {
+      border: none;
+      border-top: 1px solid #EDE5E2;
+      margin: 24px 0;
+    }
+
+    /* Output */
+    .output-section {
+      margin-top: 28px;
+      background: #FBF8F7;
+      border-radius: 10px;
+      border: 1.5px solid #EDE5E2;
+      padding: 22px;
+    }
+
+    .output-section h3 {
+      margin: 0 0 10px;
+      font-size: 14px;
+      font-weight: 700;
+      color: #301B1B;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+    }
+
+    .output-url {
+      width: 100%;
+      padding: 11px 13px;
+      border: 1.5px solid #DDD3D0;
+      border-radius: 7px;
+      font-size: 12.5px;
+      font-family: "SFMono-Regular", "Consolas", "Liberation Mono", Menlo, monospace;
+      background: #fff;
+      color: #301B1B;
+      word-break: break-all;
+      min-height: 62px;
+      resize: none;
+      line-height: 1.5;
+    }
+
+    .btn-row {
+      display: flex;
+      gap: 10px;
+      margin-top: 12px;
+      flex-wrap: wrap;
+    }
+
+    .btn-copy {
+      padding: 9px 20px;
+      background: #FF0000;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, transform 0.1s;
+    }
+
+    .btn-copy:hover { background: #CC0000; }
+    .btn-copy:active { transform: scale(0.98); }
+
+    .btn-copy.copied {
+      background: #1A7A4A;
+    }
+
+    .btn-clear {
+      padding: 9px 20px;
+      background: transparent;
+      color: #6B4A4A;
+      border: 1.5px solid #DDD3D0;
+      border-radius: 7px;
+      font-size: 14px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.15s, border-color 0.15s;
+    }
+
+    .btn-clear:hover {
+      background: #F4ECE8;
+      border-color: #BBA8A4;
+    }
+
+    /* Validation summary */
+    .val-summary {
+      background: #FFF0ED;
+      border: 1px solid #FFBFB0;
+      border-radius: 7px;
+      padding: 10px 14px;
+      font-size: 13px;
+      color: #CC3300;
+      margin-bottom: 16px;
+      display: none;
+    }
+
+    .val-summary.visible { display: block; }
+
+    /* Section label */
+    .section-label {
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      color: #8A6060;
+      margin-bottom: 16px;
+    }
+  </style>
+</head>
+<body>
+  <div class="page-wrapper">
+
+    <div class="page-header">
+      <div class="logo">
+        <svg viewBox="0 0 120 120" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <rect width="120" height="120" fill="currentColor" rx="24"/>
+          <path fill="#fff" d="M45 26h42c5.523 0 10 4.477 10 10v48c0 5.523-4.477 10-10 10H45V26z"/>
+          <path fill="#fff" d="M23 26h17c5.523 0 10 4.477 10 10v48c0 5.523-4.477 10-10 10H23V26z"/>
+        </svg>
+        <span class="logo-text">Kinsta</span>
+      </div>
+    </div>
+
+    <h1>UTM URL Builder</h1>
+    <p class="subtitle">Build correctly formatted campaign tracking URLs for Google Analytics 4.</p>
+
+    <div class="info-banner">
+      <strong>Before you start:</strong> Never add UTM parameters to internal links (links between kinsta.com pages). UTMs are for external links only - inside emails, ads, social posts, and partner sites. This tool automatically lowercases all values and replaces spaces with underscores to keep your GA4 data clean.
+    </div>
+
+    <div class="card">
+      <div id="val-summary" class="val-summary">Please fill in all required fields before copying.</div>
+
+      <p class="section-label">Destination</p>
+
+      <div class="field">
+        <label for="f_url">Page URL <span class="required">*</span></label>
+        <span class="field-hint">The full URL of the page you are linking to, including https:// (e.g. https://www.example.com/blog/example-post/)</span>
+        <input type="url" id="f_url" placeholder="https://www.example.com/blog/example-post/" autocomplete="off" />
+        <span class="error-msg" id="e_url">Please enter a valid URL starting with https://</span>
+      </div>
+
+      <hr class="divider" />
+      <p class="section-label">Required parameters</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f_source">Campaign Source <span class="required">*</span></label>
+          <span class="field-hint">The domain of the site or platform sending the traffic (e.g. facebook.com, linkedin.com, kinsta_newsletter)</span>
+          <input type="text" id="f_source" placeholder="e.g. facebook.com" autocomplete="off" />
+          <span class="error-msg" id="e_source">Campaign source is required</span>
+        </div>
+
+        <div class="field">
+          <label for="f_medium">Campaign Medium <span class="required">*</span></label>
+          <span class="field-hint">The marketing channel type</span>
+          <select id="f_medium">
+            <option value="">— Select a medium —</option>
+            <option value="cpc">cpc - Paid Search (Google Ads, Bing)</option>
+            <option value="paidsocial">paidsocial - Paid Social (Meta, LinkedIn, Reddit, X)</option>
+            <option value="email">email - Email (newsletters, drip, promotional)</option>
+            <option value="display">display - Display / Banner Ads</option>
+            <option value="social">social - Organic Social (unpaid posts)</option>
+            <option value="affiliate">affiliate - Affiliate / Partner links</option>
+            <option value="referral">referral - Referral (third-party sites)</option>
+            <option value="video">video - Organic Video (YouTube, Vimeo)</option>
+            <option value="audio">audio - Audio / Podcast</option>
+            <option value="sms">sms - SMS</option>
+          </select>
+          <span class="error-msg" id="e_medium">Please select a campaign medium</span>
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f_name">Campaign Name <span class="required">*</span></label>
+        <span class="field-hint">A shared name used across all channels for this campaign - use the same value in every channel so you can compare performance in one report (e.g. black_friday_2025, spring_promotion, agency_direct_mail)</span>
+        <input type="text" id="f_name" placeholder="e.g. black_friday_2025" autocomplete="off" />
+        <span class="error-msg" id="e_name">Campaign name is required</span>
+      </div>
+
+      <hr class="divider" />
+      <p class="section-label">Optional parameters</p>
+
+      <div class="field-row">
+        <div class="field">
+          <label for="f_id">Campaign ID</label>
+          <span class="field-hint">A numeric or alphanumeric ID linking this URL to a record in your ad platform or CRM (e.g. a HubSpot or Google Ads campaign ID)</span>
+          <input type="text" id="f_id" placeholder="e.g. hs-campaign-1234" autocomplete="off" />
+        </div>
+
+        <div class="field">
+          <label for="f_term">Campaign Term</label>
+          <span class="field-hint">The keyword that triggered the ad - primarily for paid search. Also useful to identify the audience segment being targeted.</span>
+          <input type="text" id="f_term" placeholder="e.g. managed-wordpress-hosting" autocomplete="off" />
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="f_content">Campaign Content</label>
+        <span class="field-hint">Differentiates between creative or copy variants within the same campaign - useful for A/B testing (e.g. cta_red, banner_300x250, headline_v2)</span>
+        <input type="text" id="f_content" placeholder="e.g. cta_red" autocomplete="off" />
+      </div>
+
+      <div class="output-section">
+        <h3>Generated URL</h3>
+        <textarea class="output-url" id="output" readonly placeholder="Fill in the required fields above to generate your URL…"></textarea>
+        <div class="btn-row">
+          <button class="btn-copy" id="btn-copy">Copy URL</button>
+          <button class="btn-clear" id="btn-clear">Clear all</button>
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <script>
+    (function () {
+
+      var fields = {
+        url:     document.getElementById('f_url'),
+        source:  document.getElementById('f_source'),
+        medium:  document.getElementById('f_medium'),
+        name:    document.getElementById('f_name'),
+        id:      document.getElementById('f_id'),
+        term:    document.getElementById('f_term'),
+        content: document.getElementById('f_content')
+      };
+
+      var errors = {
+        url:    document.getElementById('e_url'),
+        source: document.getElementById('e_source'),
+        medium: document.getElementById('e_medium'),
+        name:   document.getElementById('e_name')
+      };
+
+      var output      = document.getElementById('output');
+      var btnCopy     = document.getElementById('btn-copy');
+      var btnClear    = document.getElementById('btn-clear');
+      var valSummary  = document.getElementById('val-summary');
+
+      // Converts a string to a safe, lowercase slug
+      function slugify(str) {
+        return str.trim()
+          .toLowerCase()
+          .replace(/\s+/g, '_')
+          .replace(/[^a-z0-9\-_.~]/g, '');
+      }
+
+      function isValidUrl(str) {
+        try {
+          var u = new URL(str);
+          return u.protocol === 'https:' || u.protocol === 'http:';
+        } catch (e) {
+          return false;
+        }
+      }
+
+      function buildUrl() {
+        var base   = fields.url.value.trim();
+        var source = fields.source.value.trim();
+        var medium = fields.medium.value;
+        var name   = fields.name.value.trim();
+        var id     = fields.id.value.trim();
+        var term   = fields.term.value.trim();
+        var content = fields.content.value.trim();
+
+        if (!base || !source || !medium || !name || !isValidUrl(base)) {
+          output.value = '';
+          return;
+        }
+
+        var params = [];
+        if (id)      params.push('utm_id='       + encodeURIComponent(slugify(id)));
+        params.push(  'utm_source='  + encodeURIComponent(slugify(source)));
+        params.push(  'utm_medium='  + encodeURIComponent(medium));
+        params.push(  'utm_campaign='+ encodeURIComponent(slugify(name)));
+        if (term)    params.push('utm_term='     + encodeURIComponent(slugify(term)));
+        if (content) params.push('utm_content='  + encodeURIComponent(slugify(content)));
+
+        var sep = base.indexOf('?') === -1 ? '?' : '&';
+        output.value = base + sep + params.join('&');
+      }
+
+      function clearErrors() {
+        Object.values(fields).forEach(function (el) { el.classList.remove('has-error'); });
+        Object.values(errors).forEach(function (el) { el.classList.remove('visible'); });
+        valSummary.classList.remove('visible');
+      }
+
+      function validateAndCopy() {
+        clearErrors();
+        var valid = true;
+
+        var base = fields.url.value.trim();
+        if (!base || !isValidUrl(base)) {
+          errors.url.classList.add('visible');
+          fields.url.classList.add('has-error');
+          valid = false;
+        }
+        if (!fields.source.value.trim()) {
+          errors.source.classList.add('visible');
+          fields.source.classList.add('has-error');
+          valid = false;
+        }
+        if (!fields.medium.value) {
+          errors.medium.classList.add('visible');
+          fields.medium.classList.add('has-error');
+          valid = false;
+        }
+        if (!fields.name.value.trim()) {
+          errors.name.classList.add('visible');
+          fields.name.classList.add('has-error');
+          valid = false;
+        }
+
+        if (!valid) {
+          valSummary.classList.add('visible');
+          return;
+        }
+
+        var url = output.value;
+        if (!url) return;
+
+        navigator.clipboard.writeText(url).then(function () {
+          flash();
+        }).catch(function () {
+          output.select();
+          document.execCommand('copy');
+          flash();
+        });
+      }
+
+      function flash() {
+        btnCopy.textContent = 'Copied!';
+        btnCopy.classList.add('copied');
+        setTimeout(function () {
+          btnCopy.textContent = 'Copy URL';
+          btnCopy.classList.remove('copied');
+        }, 2500);
+      }
+
+      function clearAll() {
+        Object.values(fields).forEach(function (el) {
+          el.value = el.tagName === 'SELECT' ? '' : '';
+        });
+        fields.medium.value = '';
+        output.value = '';
+        clearErrors();
+      }
+
+      // Live preview
+      Object.values(fields).forEach(function (el) {
+        el.addEventListener('input', buildUrl);
+        el.addEventListener('change', buildUrl);
+      });
+
+      btnCopy.addEventListener('click', validateAndCopy);
+      btnClear.addEventListener('click', clearAll);
+
+    })();
+  </script>
+</body>
+</html>

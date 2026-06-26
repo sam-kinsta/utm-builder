@@ -17,26 +17,11 @@
       min-height: 100vh;
     }
 
-    .page-wrapper {
-      max-width: 780px;
-      margin: 0 auto;
-    }
+    .page-wrapper { max-width: 780px; margin: 0 auto; }
 
-    h1 {
-      font-size: 28px;
-      font-weight: 700;
-      margin: 0 0 6px;
-      letter-spacing: -0.03em;
-      color: #301B1B;
-    }
+    h1 { font-size: 28px; font-weight: 700; margin: 0 0 6px; letter-spacing: -0.03em; color: #301B1B; }
+    .subtitle { font-size: 15px; color: #6B4A4A; margin: 0 0 28px; }
 
-    .subtitle {
-      font-size: 15px;
-      color: #6B4A4A;
-      margin: 0 0 28px;
-    }
-
-    /* Info banner */
     .info-banner {
       background: #fff;
       border-left: 4px solid #FF3F00;
@@ -48,7 +33,6 @@
       line-height: 1.5;
     }
 
-    /* Card */
     .card {
       background: #fff;
       border-radius: 12px;
@@ -56,29 +40,11 @@
       box-shadow: 0 1px 4px rgba(48,27,27,0.08), 0 4px 16px rgba(48,27,27,0.06);
     }
 
-    /* Field styles */
-    .field {
-      margin-bottom: 22px;
-    }
+    .field { margin-bottom: 22px; }
+    .field label { display: block; font-weight: 600; font-size: 13.5px; margin-bottom: 3px; color: #301B1B; }
+    .field-hint { font-size: 12.5px; color: #8A6060; margin-bottom: 7px; display: block; line-height: 1.4; }
 
-    .field label {
-      display: block;
-      font-weight: 600;
-      font-size: 13.5px;
-      margin-bottom: 3px;
-      color: #301B1B;
-    }
-
-    .field-hint {
-      font-size: 12.5px;
-      color: #8A6060;
-      margin-bottom: 7px;
-      display: block;
-      line-height: 1.4;
-    }
-
-    .field input,
-    .field select {
+    .field input, .field select {
       width: 100%;
       padding: 9px 12px;
       border: 1.5px solid #DDD3D0;
@@ -98,46 +64,67 @@
       padding-right: 36px;
     }
 
-    .field input:focus,
-    .field select:focus {
+    .field input:focus, .field select:focus {
       border-color: #FF3F00;
       box-shadow: 0 0 0 3px rgba(255,63,0,0.12);
       outline: none;
     }
 
-    .field input.has-error,
-    .field select.has-error {
-      border-color: #CC3300;
-    }
+    .field input.has-error, .field select.has-error { border-color: #CC3300; }
 
-    .error-msg {
-      font-size: 12px;
-      color: #CC3300;
-      margin-top: 4px;
-      display: none;
-    }
-
+    .error-msg { font-size: 12px; color: #CC3300; margin-top: 4px; display: none; }
     .error-msg.visible { display: block; }
-
     .required { color: #FF3F00; margin-left: 2px; }
 
-    /* Grid */
     .field-row {
       display: grid;
       grid-template-columns: 1fr 1fr;
       gap: 0 24px;
     }
+    @media (max-width: 580px) { .field-row { grid-template-columns: 1fr; } }
 
-    @media (max-width: 580px) {
-      .field-row { grid-template-columns: 1fr; }
+    .divider { border: none; border-top: 1px solid #EDE5E2; margin: 24px 0; }
+
+    /* Autocomplete */
+    .autocomplete-wrap { position: relative; }
+
+    .ac-dropdown {
+      position: absolute;
+      top: calc(100% + 4px);
+      left: 0;
+      right: 0;
+      background: #fff;
+      border: 1.5px solid #DDD3D0;
+      border-radius: 7px;
+      max-height: 224px;
+      overflow-y: auto;
+      z-index: 200;
+      display: none;
+      box-shadow: 0 4px 16px rgba(48,27,27,0.12);
     }
 
-    /* Divider */
-    .divider {
-      border: none;
-      border-top: 1px solid #EDE5E2;
-      margin: 24px 0;
+    .ac-dropdown.open { display: block; }
+
+    .ac-option {
+      padding: 9px 12px;
+      cursor: pointer;
+      border-bottom: 1px solid #F4ECE8;
     }
+    .ac-option:last-child { border-bottom: none; }
+    .ac-option:hover, .ac-option.highlighted { background: #FBF8F7; }
+    .ac-option-value { font-size: 13.5px; font-weight: 600; color: #301B1B; }
+    .ac-option-label { font-size: 12px; color: #8A6060; margin-top: 1px; }
+
+    .ac-empty {
+      padding: 10px 12px;
+      font-size: 13px;
+      color: #8A6060;
+      font-style: italic;
+    }
+
+    .campaign-status { font-size: 12px; color: #8A6060; margin-top: 4px; display: block; }
+    .campaign-status.loaded { color: #1A7A4A; }
+    .campaign-status.error  { color: #8A6060; }
 
     /* Output */
     .output-section {
@@ -148,14 +135,7 @@
       padding: 22px;
     }
 
-    .output-section h3 {
-      margin: 0 0 10px;
-      font-size: 14px;
-      font-weight: 700;
-      color: #301B1B;
-      text-transform: uppercase;
-      letter-spacing: 0.06em;
-    }
+    .output-section h3 { margin: 0 0 10px; font-size: 14px; font-weight: 700; color: #301B1B; text-transform: uppercase; letter-spacing: 0.06em; }
 
     .output-url {
       width: 100%;
@@ -172,12 +152,7 @@
       line-height: 1.5;
     }
 
-    .btn-row {
-      display: flex;
-      gap: 10px;
-      margin-top: 12px;
-      flex-wrap: wrap;
-    }
+    .btn-row { display: flex; gap: 10px; margin-top: 12px; flex-wrap: wrap; }
 
     .btn-generate {
       padding: 9px 20px;
@@ -190,7 +165,6 @@
       cursor: pointer;
       transition: background 0.15s, transform 0.1s;
     }
-
     .btn-generate:hover { background: #4A2E2E; }
     .btn-generate:active { transform: scale(0.98); }
 
@@ -206,10 +180,8 @@
       transition: background 0.15s, transform 0.1s;
       display: none;
     }
-
     .btn-copy.visible { display: inline-block; }
     .btn-copy:hover { background: #CC0000; }
-    .btn-copy:active { transform: scale(0.98); }
     .btn-copy.copied { background: #1A7A4A; }
 
     .btn-clear {
@@ -223,13 +195,8 @@
       cursor: pointer;
       transition: background 0.15s, border-color 0.15s;
     }
+    .btn-clear:hover { background: #F4ECE8; border-color: #BBA8A4; }
 
-    .btn-clear:hover {
-      background: #F4ECE8;
-      border-color: #BBA8A4;
-    }
-
-    /* Validation summary */
     .val-summary {
       background: #FFF0ED;
       border: 1px solid #FFBFB0;
@@ -240,10 +207,8 @@
       margin-bottom: 16px;
       display: none;
     }
-
     .val-summary.visible { display: block; }
 
-    /* Section label */
     .section-label {
       font-size: 11px;
       font-weight: 700;
@@ -309,8 +274,12 @@
 
       <div class="field">
         <label for="f_name">Campaign Name <span class="required">*</span></label>
-        <span class="field-hint">Use the same name across all channels for this campaign so you can compare performance in one report (e.g. black_friday_2025)</span>
-        <input type="text" id="f_name" placeholder="e.g. black_friday_2025" autocomplete="off" />
+        <span class="field-hint">Click to see existing campaigns, or start typing to filter. Use the same name across all channels. You can also enter a new campaign name.</span>
+        <div class="autocomplete-wrap">
+          <input type="text" id="f_name" placeholder="e.g. black_friday_2025" autocomplete="off" />
+          <div class="ac-dropdown" id="ac-dropdown"></div>
+        </div>
+        <span class="campaign-status" id="campaign-status">Loading campaigns...</span>
         <span class="error-msg" id="e_name">Campaign name is required</span>
       </div>
 
@@ -353,11 +322,114 @@
   <script>
     (function () {
 
+      var SHEET_ID = '1usEg-TaSmM2nHQTJEpG1XJLhwUdPa4drOw959Ld9it0';
+      var SHEET_CSV = 'https://docs.google.com/spreadsheets/d/' + SHEET_ID + '/gviz/tq?tqx=out:csv';
+
+      var campaigns = []; // { value, label }
+
+      var fName      = document.getElementById('f_name');
+      var dropdown   = document.getElementById('ac-dropdown');
+      var status     = document.getElementById('campaign-status');
+
+      // ── Autocomplete ──────────────────────────────────────────
+      function renderDropdown(filter) {
+        var q = (filter || '').toLowerCase();
+        var matches = q
+          ? campaigns.filter(function(c) {
+              return c.value.indexOf(q) !== -1 || c.label.toLowerCase().indexOf(q) !== -1;
+            })
+          : campaigns;
+
+        dropdown.innerHTML = '';
+
+        if (!matches.length) {
+          var empty = document.createElement('div');
+          empty.className = 'ac-empty';
+          empty.textContent = q ? 'No matching campaigns - your new name will be used' : 'No campaigns loaded';
+          dropdown.appendChild(empty);
+        } else {
+          matches.forEach(function(c) {
+            var opt = document.createElement('div');
+            opt.className = 'ac-option';
+            opt.innerHTML = '<div class="ac-option-value">' + c.value + '</div>'
+                          + '<div class="ac-option-label">' + c.label + '</div>';
+            opt.addEventListener('mousedown', function(e) {
+              e.preventDefault(); // prevent blur before click
+              fName.value = c.value;
+              closeDropdown();
+            });
+            dropdown.appendChild(opt);
+          });
+        }
+
+        dropdown.classList.add('open');
+      }
+
+      function closeDropdown() {
+        dropdown.classList.remove('open');
+      }
+
+      fName.addEventListener('focus', function() {
+        if (campaigns.length) renderDropdown(fName.value);
+      });
+
+      fName.addEventListener('input', function() {
+        if (campaigns.length) renderDropdown(fName.value);
+      });
+
+      fName.addEventListener('blur', function() {
+        setTimeout(closeDropdown, 150);
+      });
+
+      // ── Fetch campaigns from Google Sheet ─────────────────────
+      fetch(SHEET_CSV)
+        .then(function(r) {
+          if (!r.ok) throw new Error('HTTP ' + r.status);
+          return r.text();
+        })
+        .then(function(csv) {
+          var lines = csv.trim().split('\n').slice(1);
+          lines.forEach(function(line) {
+            var cols = parseCSVLine(line);
+            var label  = (cols[0] || '').trim().replace(/^"|"$/g, '');
+            var value  = (cols[1] || '').trim().replace(/^"|"$/g, '');
+            var status = (cols[3] || '').trim().replace(/^"|"$/g, '').toLowerCase();
+            if (value && status === 'active') {
+              campaigns.push({ value: value, label: label });
+            }
+          });
+          var el = document.getElementById('campaign-status');
+          if (campaigns.length) {
+            el.textContent = '✓ ' + campaigns.length + ' active campaign' + (campaigns.length === 1 ? '' : 's') + ' loaded';
+            el.className = 'campaign-status loaded';
+          } else {
+            el.textContent = '';
+          }
+        })
+        .catch(function() {
+          var el = document.getElementById('campaign-status');
+          el.textContent = 'Could not load campaigns - enter a name manually';
+          el.className = 'campaign-status error';
+        });
+
+      function parseCSVLine(line) {
+        var cols = [], cur = '', inQ = false;
+        for (var i = 0; i < line.length; i++) {
+          var ch = line[i];
+          if (ch === '"') { inQ = !inQ; }
+          else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+          else { cur += ch; }
+        }
+        cols.push(cur);
+        return cols;
+      }
+
+      // ── Form fields ───────────────────────────────────────────
       var fields = {
         url:     document.getElementById('f_url'),
         source:  document.getElementById('f_source'),
         medium:  document.getElementById('f_medium'),
-        name:    document.getElementById('f_name'),
+        name:    fName,
         id:      document.getElementById('f_id'),
         term:    document.getElementById('f_term'),
         content: document.getElementById('f_content')
@@ -377,74 +449,49 @@
       var valSummary = document.getElementById('val-summary');
 
       function slugify(str) {
-        return str.trim()
-          .toLowerCase()
-          .replace(/[\s\-]+/g, '_')
-          .replace(/[^a-z0-9_.~]/g, '');
+        return str.trim().toLowerCase().replace(/[\s\-]+/g, '_').replace(/[^a-z0-9_.~]/g, '');
       }
 
       function isValidUrl(str) {
-        try {
-          var u = new URL(str);
-          return u.protocol === 'https:' || u.protocol === 'http:';
-        } catch (e) {
-          return false;
-        }
+        try { var u = new URL(str); return u.protocol === 'https:' || u.protocol === 'http:'; }
+        catch (e) { return false; }
       }
 
       function clearErrors() {
-        Object.values(fields).forEach(function (el) { el.classList.remove('has-error'); });
-        Object.values(errors).forEach(function (el) { el.classList.remove('visible'); });
+        Object.values(fields).forEach(function(el) { el.classList.remove('has-error'); });
+        Object.values(errors).forEach(function(el) { el.classList.remove('visible'); });
         valSummary.classList.remove('visible');
       }
 
       function generateUrl() {
         clearErrors();
         var valid = true;
-
         var base = fields.url.value.trim();
+
         if (!base || !isValidUrl(base)) {
-          errors.url.classList.add('visible');
-          fields.url.classList.add('has-error');
-          valid = false;
+          errors.url.classList.add('visible'); fields.url.classList.add('has-error'); valid = false;
         }
         if (!fields.source.value.trim()) {
-          errors.source.classList.add('visible');
-          fields.source.classList.add('has-error');
-          valid = false;
+          errors.source.classList.add('visible'); fields.source.classList.add('has-error'); valid = false;
         }
         if (!fields.medium.value) {
-          errors.medium.classList.add('visible');
-          fields.medium.classList.add('has-error');
-          valid = false;
+          errors.medium.classList.add('visible'); fields.medium.classList.add('has-error'); valid = false;
         }
         if (!fields.name.value.trim()) {
-          errors.name.classList.add('visible');
-          fields.name.classList.add('has-error');
-          valid = false;
+          errors.name.classList.add('visible'); fields.name.classList.add('has-error'); valid = false;
         }
 
         if (!valid) {
-          valSummary.classList.add('visible');
-          output.value = '';
-          btnCopy.classList.remove('visible');
-          return;
+          valSummary.classList.add('visible'); output.value = ''; btnCopy.classList.remove('visible'); return;
         }
 
-        var source  = fields.source.value.trim();
-        var medium  = fields.medium.value;
-        var name    = fields.name.value.trim();
-        var id      = fields.id.value.trim();
-        var term    = fields.term.value.trim();
-        var content = fields.content.value.trim();
-
         var params = [];
-        params.push('utm_source='   + encodeURIComponent(slugify(source)));
-        params.push('utm_medium='   + encodeURIComponent(medium));
-        params.push('utm_campaign=' + encodeURIComponent(slugify(name)));
-        if (id)      params.push('utm_id='      + encodeURIComponent(slugify(id)));
-        if (term)    params.push('utm_term='    + encodeURIComponent(slugify(term)));
-        if (content) params.push('utm_content=' + encodeURIComponent(slugify(content)));
+        params.push('utm_source='   + encodeURIComponent(slugify(fields.source.value)));
+        params.push('utm_medium='   + encodeURIComponent(fields.medium.value));
+        params.push('utm_campaign=' + encodeURIComponent(slugify(fields.name.value)));
+        if (fields.id.value.trim())      params.push('utm_id='      + encodeURIComponent(slugify(fields.id.value)));
+        if (fields.term.value.trim())    params.push('utm_term='    + encodeURIComponent(slugify(fields.term.value)));
+        if (fields.content.value.trim()) params.push('utm_content=' + encodeURIComponent(slugify(fields.content.value)));
 
         var sep = base.indexOf('?') === -1 ? '?' : '&';
         output.value = base + sep + params.join('&');
@@ -454,27 +501,18 @@
       function copyUrl() {
         var url = output.value;
         if (!url) return;
-
-        navigator.clipboard.writeText(url).then(function () {
-          flash();
-        }).catch(function () {
-          output.select();
-          document.execCommand('copy');
-          flash();
+        navigator.clipboard.writeText(url).then(flash).catch(function() {
+          output.select(); document.execCommand('copy'); flash();
         });
       }
 
       function flash() {
-        btnCopy.textContent = 'Copied!';
-        btnCopy.classList.add('copied');
-        setTimeout(function () {
-          btnCopy.textContent = 'Copy URL';
-          btnCopy.classList.remove('copied');
-        }, 2500);
+        btnCopy.textContent = 'Copied!'; btnCopy.classList.add('copied');
+        setTimeout(function() { btnCopy.textContent = 'Copy URL'; btnCopy.classList.remove('copied'); }, 2500);
       }
 
       function clearAll() {
-        Object.values(fields).forEach(function (el) { el.value = ''; });
+        Object.values(fields).forEach(function(el) { el.value = ''; });
         fields.medium.value = '';
         output.value = '';
         btnCopy.classList.remove('visible');
@@ -484,6 +522,11 @@
       btnGen.addEventListener('click', generateUrl);
       btnCopy.addEventListener('click', copyUrl);
       btnClear.addEventListener('click', clearAll);
+
+      // close dropdown when clicking elsewhere
+      document.addEventListener('click', function(e) {
+        if (!e.target.closest('.autocomplete-wrap')) closeDropdown();
+      });
 
     })();
   </script>
